@@ -180,6 +180,18 @@
 			};
 		};
 
+		csi1: csi@1cb4000 {
+			compatible = "allwinner,sun8i-v3s-csi";
+			reg = <0x01cb4000 0x1000>;
+			interrupts = <GIC_SPI 84 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&ccu CLK_BUS_CSI>,
+				 <&ccu CLK_CSI1_SCLK>,
+				 <&ccu CLK_DRAM_CSI>;
+			clock-names = "bus", "mod", "ram";
+			resets = <&ccu RST_BUS_CSI>;
+			status = "disabled";
+		};
+
 		dma: dma-controller@01c02000 {
 			compatible = "allwinner,sun8i-v3s-dma";
 			reg = <0x01c02000 0x1000>;
@@ -331,7 +343,10 @@
 				pins = "PB6", "PB7";
 				function = "i2c0";
 			};
-
+			i2c1_pins: i2c1-pins {
+				pins = "PE21", "PE22";
+				function = "i2c1";
+			};
 			uart0_pb_pins: uart0-pb-pins {
 				pins = "PB8", "PB9";
 				function = "uart0";
@@ -370,6 +385,7 @@
 				       "PD18", "PD19", "PD20", "PD21";
 				function = "lcd";
 			};
+
 		};
 
 		timer@1c20c00 {
