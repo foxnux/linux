@@ -88,6 +88,8 @@
         pinctrl-names = "default";
         irq-gpios = <&pio 1 11 GPIO_ACTIVE_HIGH>; /* (PB11) */
         reset-gpios = <&pio 1 10 GPIO_ACTIVE_HIGH>; /* RST (PB10) */
+	AVDD28-supply = <&reg_vcc3v3>; 
+	VDDIO-supply = <&reg_vcc3v3>;
     };
 };
 
