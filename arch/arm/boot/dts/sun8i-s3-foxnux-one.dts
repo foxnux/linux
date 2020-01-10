@@ -33,13 +33,6 @@
 	        };
 	};
 
-	reg_vcc3v3: vcc3v3 {
-		compatible = "regulator-fixed";
-		regulator-name = "vcc3v3";
-		regulator-min-microvolt = <3300000>;
-		regulator-max-microvolt = <3300000>;
-	};
-
 	backlight: backlight {
 		compatible = "pwm-backlight";
 		pwms = <&pwm 0 1000000 1>;
@@ -52,12 +45,12 @@
 		#size-cells = <0>;
 		#compatible = "urt,umsh-8596md-t", "simple-panel";
 		compatible = "avic,tm070ddh03", "simple-panel";
+		power-supply = <&reg_vcc3v3>;
 		port@0 {
 			reg = <0>;
 			backlight = <&backlight>;
 			#address-cells = <1>;
 			#size-cells = <0>;
-
 			panel_input: endpoint@0 {
 				reg = <0>;
 				remote-endpoint = <&tcon0_out_lcd>;
@@ -224,6 +217,18 @@
 	status = "okay";
 };
 
+&uart1 {
+	pinctrl-0 = <&uart1_pg_pins>;
+	pinctrl-names = "default";
+	status = "okay";
+};
+
+&uart2 {
+        pinctrl-0 = <&uart2_pb_pins>;
+        pinctrl-names = "default";
+        status = "okay";
+};
+
 &usb_otg {
 	dr_mode = "otg";
 	status = "okay";
@@ -235,21 +240,42 @@
 	status = "okay";
 };
 &pio {
+	vcc-pb-supply = <&reg_vcc3v3>;
+	vcc-pc-supply = <&reg_vcc3v3>;
+	vcc-pd-supply = <&reg_vcc3v3>;
+	vcc-pe-supply = <&reg_vcc3v3>;
+	vcc-pf-supply = <&reg_vcc3v3>;
+	vcc-pg-supply = <&reg_vcc3v3>;
+
 	csi1_8bit: csi1-8bit@0 {
-	       pins  = 	"PE8","PE9","PE10","PE11","PE12","PE13","PE14","PE15";
-	       bias-pulldown;
-	       function = "csi";
+		pins = "PE8","PE9","PE10","PE11","PE12","PE13","PE14","PE15";
+		bias-pulldown;
+		function = "csi";
     	};
 
 	csi1_clk: csi1-clk@0 {
-	        pins = "PE0","PE2","PE3";
-	        bias-disable;
-	        function = "csi";
+		pins = "PE0","PE2","PE3";
+		bias-disable;
+		function = "csi";
     	};
 
  	csi1_mclk: csi1-mclk@0 {
-	        pins = "PE1";
-	        bias-disable;
-	        function = "csi";
+		pins = "PE1";
+		bias-disable;
+		function = "csi";
     	};
+
+	uart1_pg_pins: uart1-pg-pins {
+		pins = "PG6", "PG7";
+		function = "uart1";
+	};
+
+	uart2_pb_pins: uart1-pb-pins {
+		pins = "PB0", "PB1";
+		function = "uart2";
+	};
+};
+
+&reg_vcc5v0 {
+	status = "disabled";
 };
