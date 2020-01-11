@@ -239,6 +239,20 @@
 	//usb0_id_det-gpios = <&pio 5 6 GPIO_ACTIVE_HIGH>;
 	status = "okay";
 };
+
+&spi0 {
+	pinctrl-names = "default"; 
+	pinctrl-0 = <&spi0_pins>; 
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+	spidev@0{
+		compatible = "rohm,dh2228fv";
+		reg = <0>;
+		spi-max-frequency = <1000000>;
+	};
+};
+
 &pio {
 	vcc-pb-supply = <&reg_vcc3v3>;
 	vcc-pc-supply = <&reg_vcc3v3>;
